@@ -1,0 +1,49 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.txn-item {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  border-left: 4px solid #4caf50; // Green for Approved
+  background: #f9f9f9;
+  margin-bottom: 0.5rem;
+
+  &.rejected {
+    border-left-color: #f44336; // Red for Rejected
+    background: #fff0f0;
+  }
+
+  .txn-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+  }
+
+  .txn-time {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.25rem;
+  }
+}

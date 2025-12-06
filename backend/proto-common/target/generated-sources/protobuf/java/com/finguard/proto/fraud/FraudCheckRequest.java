@@ -4,10 +4,6 @@
 package com.finguard.proto.fraud;
 
 /**
- * <pre>
- * The Input
- * </pre>
- *
  * Protobuf type {@code com.finguard.proto.fraud.FraudCheckRequest}
  */
 public final class FraudCheckRequest extends
@@ -363,10 +359,6 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * <pre>
-   * The Input
-   * </pre>
-   *
    * Protobuf type {@code com.finguard.proto.fraud.FraudCheckRequest}
    */
   public static final class Builder extends

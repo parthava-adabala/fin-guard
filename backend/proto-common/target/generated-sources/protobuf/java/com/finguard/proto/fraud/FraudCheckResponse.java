@@ -4,10 +4,6 @@
 package com.finguard.proto.fraud;
 
 /**
- * <pre>
- * The Output
- * </pre>
- *
  * Protobuf type {@code com.finguard.proto.fraud.FraudCheckResponse}
  */
 public final class FraudCheckResponse extends
@@ -58,10 +54,6 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object reason_ = "";
   /**
-   * <pre>
-   * "Amount too high", "Blacklisted IP", etc.
-   * </pre>
-   *
    * <code>string reason = 2;</code>
    * @return The reason.
    */
@@ -79,10 +71,6 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <pre>
-   * "Amount too high", "Blacklisted IP", etc.
-   * </pre>
-   *
    * <code>string reason = 2;</code>
    * @return The bytes for reason.
    */
@@ -270,10 +258,6 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * <pre>
-   * The Output
-   * </pre>
-   *
    * Protobuf type {@code com.finguard.proto.fraud.FraudCheckResponse}
    */
   public static final class Builder extends
@@ -489,10 +473,6 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object reason_ = "";
     /**
-     * <pre>
-     * "Amount too high", "Blacklisted IP", etc.
-     * </pre>
-     *
      * <code>string reason = 2;</code>
      * @return The reason.
      */
@@ -509,10 +489,6 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <pre>
-     * "Amount too high", "Blacklisted IP", etc.
-     * </pre>
-     *
      * <code>string reason = 2;</code>
      * @return The bytes for reason.
      */
@@ -530,10 +506,6 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <pre>
-     * "Amount too high", "Blacklisted IP", etc.
-     * </pre>
-     *
      * <code>string reason = 2;</code>
      * @param value The reason to set.
      * @return This builder for chaining.
@@ -547,10 +519,6 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <pre>
-     * "Amount too high", "Blacklisted IP", etc.
-     * </pre>
-     *
      * <code>string reason = 2;</code>
      * @return This builder for chaining.
      */
@@ -561,10 +529,6 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <pre>
-     * "Amount too high", "Blacklisted IP", etc.
-     * </pre>
-     *
      * <code>string reason = 2;</code>
      * @param value The bytes for reason to set.
      * @return This builder for chaining.

@@ -23,19 +23,23 @@ public class TransactionService {
 
     private final TransactionRepository repository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final FraudServiceGrpc.FraudServiceBlockingStub fraudStub;
 
-    @GrpcClient("fraud-service")
-    private FraudServiceGrpc.FraudServiceBlockingStub fraudStub;
-
-    public TransactionService(TransactionRepository repository, KafkaTemplate<String, Object> kafkaTemplate) {
+    // Constructor Injection for EVERYTHING (Best Practice)
+    public TransactionService(
+            TransactionRepository repository,
+            KafkaTemplate<String, Object> kafkaTemplate,
+            @GrpcClient("fraud-service") FraudServiceGrpc.FraudServiceBlockingStub fraudStub) {
         this.repository = repository;
         this.kafkaTemplate = kafkaTemplate;
+        this.fraudStub = fraudStub;
     }
 
     @Transactional
     public Transaction initiateTransaction(TransactionRequest request) {
         log.info("Processing transaction for account: {}", request.getAccountId());
 
+        // 1. Call Fraud Sentinel (gRPC)
         FraudCheckResponse fraudResponse = fraudStub.analyzeTransaction(
                 FraudCheckRequest.newBuilder()
                         .setAccountId(request.getAccountId())
@@ -45,8 +49,10 @@ public class TransactionService {
                         .build()
         );
 
+        // 2. Determine Status
         TransactionStatus status = fraudResponse.getIsRejected() ? TransactionStatus.REJECTED : TransactionStatus.APPROVED;
 
+        // 3. Save to DB
         Transaction transaction = new Transaction();
         transaction.setAccountId(request.getAccountId());
         transaction.setAmount(request.getAmount());
@@ -56,6 +62,7 @@ public class TransactionService {
 
         Transaction savedTransaction = repository.save(transaction);
 
+        // 4. Publish to Kafka (Event-Driven) - ONLY IF APPROVED
         if (status == TransactionStatus.APPROVED) {
             TransactionEvent event = new TransactionEvent(
                     savedTransaction.getId().toString(),

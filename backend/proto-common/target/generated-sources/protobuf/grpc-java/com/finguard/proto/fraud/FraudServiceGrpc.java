@@ -3,9 +3,6 @@ package com.finguard.proto.fraud;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
- * <pre>
- * The Service Definition
- * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.58.0)",
@@ -94,16 +91,10 @@ public final class FraudServiceGrpc {
   }
 
   /**
-   * <pre>
-   * The Service Definition
-   * </pre>
    */
   public interface AsyncService {
 
     /**
-     * <pre>
-     * Unary RPC: One request, One response (Low Latency)
-     * </pre>
      */
     default void analyzeTransaction(com.finguard.proto.fraud.FraudCheckRequest request,
         io.grpc.stub.StreamObserver<com.finguard.proto.fraud.FraudCheckResponse> responseObserver) {
@@ -113,9 +104,6 @@ public final class FraudServiceGrpc {
 
   /**
    * Base class for the server implementation of the service FraudService.
-   * <pre>
-   * The Service Definition
-   * </pre>
    */
   public static abstract class FraudServiceImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -127,9 +115,6 @@ public final class FraudServiceGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service FraudService.
-   * <pre>
-   * The Service Definition
-   * </pre>
    */
   public static final class FraudServiceStub
       extends io.grpc.stub.AbstractAsyncStub<FraudServiceStub> {
@@ -145,9 +130,6 @@ public final class FraudServiceGrpc {
     }
 
     /**
-     * <pre>
-     * Unary RPC: One request, One response (Low Latency)
-     * </pre>
      */
     public void analyzeTransaction(com.finguard.proto.fraud.FraudCheckRequest request,
         io.grpc.stub.StreamObserver<com.finguard.proto.fraud.FraudCheckResponse> responseObserver) {
@@ -158,9 +140,6 @@ public final class FraudServiceGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service FraudService.
-   * <pre>
-   * The Service Definition
-   * </pre>
    */
   public static final class FraudServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<FraudServiceBlockingStub> {
@@ -176,9 +155,6 @@ public final class FraudServiceGrpc {
     }
 
     /**
-     * <pre>
-     * Unary RPC: One request, One response (Low Latency)
-     * </pre>
      */
     public com.finguard.proto.fraud.FraudCheckResponse analyzeTransaction(com.finguard.proto.fraud.FraudCheckRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -188,9 +164,6 @@ public final class FraudServiceGrpc {
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service FraudService.
-   * <pre>
-   * The Service Definition
-   * </pre>
    */
   public static final class FraudServiceFutureStub
       extends io.grpc.stub.AbstractFutureStub<FraudServiceFutureStub> {
@@ -206,9 +179,6 @@ public final class FraudServiceGrpc {
     }
 
     /**
-     * <pre>
-     * Unary RPC: One request, One response (Low Latency)
-     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.finguard.proto.fraud.FraudCheckResponse> analyzeTransaction(
         com.finguard.proto.fraud.FraudCheckRequest request) {

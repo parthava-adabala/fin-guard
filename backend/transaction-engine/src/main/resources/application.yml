@@ -38,3 +38,11 @@ grpc:
     fraud-service:
       address: static://127.0.0.1:9090
       negotiation-type: plaintext
+
+resilience4j:
+  ratelimiter:
+    instances:
+      transactionApi:
+        limitForPeriod: 5
+        limitRefreshPeriod: 60s
+        timeoutDuration: 0ms

@@ -5,7 +5,6 @@ spring:
   application:
     name: transaction-engine
 
-  # Java 21 Virtual Threads
   threads:
     virtual:
       enabled: true
@@ -34,10 +33,16 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
-# gRPC Configuration
 grpc:
   client:
     fraud-service:
-      # CRITICAL FIX: Use 127.0.0.1 instead of a hostname
       address: static://127.0.0.1:9090
       negotiation-type: plaintext
+
+resilience4j:
+  ratelimiter:
+    instances:
+      transactionApi:
+        limitForPeriod: 5
+        limitRefreshPeriod: 60s
+        timeoutDuration: 0ms

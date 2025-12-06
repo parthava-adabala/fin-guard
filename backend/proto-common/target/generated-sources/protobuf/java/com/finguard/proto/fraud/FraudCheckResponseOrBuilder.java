@@ -14,19 +14,11 @@ public interface FraudCheckResponseOrBuilder extends
   boolean getIsRejected();
 
   /**
-   * <pre>
-   * "Amount too high", "Blacklisted IP", etc.
-   * </pre>
-   *
    * <code>string reason = 2;</code>
    * @return The reason.
    */
   java.lang.String getReason();
   /**
-   * <pre>
-   * "Amount too high", "Blacklisted IP", etc.
-   * </pre>
-   *
    * <code>string reason = 2;</code>
    * @return The bytes for reason.
    */

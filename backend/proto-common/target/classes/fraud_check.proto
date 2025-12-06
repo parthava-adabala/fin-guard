@@ -6,13 +6,10 @@ option java_multiple_files = true;
 option java_package = "com.finguard.proto.fraud";
 option java_outer_classname = "FraudCheckProto";
 
-// The Service Definition
 service FraudService {
-  // Unary RPC: One request, One response (Low Latency)
   rpc AnalyzeTransaction (FraudCheckRequest) returns (FraudCheckResponse);
 }
 
-// The Input
 message FraudCheckRequest {
   string transaction_id = 1;
   string account_id = 2;
@@ -20,8 +17,7 @@ message FraudCheckRequest {
   string currency = 4;
 }
 
-// The Output
 message FraudCheckResponse {
   bool is_rejected = 1;
-  string reason = 2; // "Amount too high", "Blacklisted IP", etc.
+  string reason = 2;
 }
