@@ -1,0 +1,8 @@
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/TransactionEngineApplication.java
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/controller/TransactionController.java
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/dto/TransactionRequest.java
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/event/TransactionEvent.java
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/model/Transaction.java
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/model/TransactionStatus.java
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/repository/TransactionRepository.java
+/Users/parthava/Desktop/projects/fin-guard/backend/transaction-engine/src/main/java/com/finguard/transaction/service/TransactionService.java

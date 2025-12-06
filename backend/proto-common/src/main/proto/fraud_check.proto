@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package com.finguard.proto.fraud;
+
+option java_multiple_files = true;
+option java_package = "com.finguard.proto.fraud";
+option java_outer_classname = "FraudCheckProto";
+
+service FraudService {
+  rpc AnalyzeTransaction (FraudCheckRequest) returns (FraudCheckResponse);
+}
+
+message FraudCheckRequest {
+  string transaction_id = 1;
+  string account_id = 2;
+  double amount = 3;
+  string currency = 4;
+}
+
+message FraudCheckResponse {
+  bool is_rejected = 1;
+  string reason = 2;
+}

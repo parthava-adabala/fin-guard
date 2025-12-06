@@ -1,0 +1,16 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: analytics-service
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      # CHANGED: New group to reset offset and skip the "poison" message
+      group-id: analytics-group-v2
+      auto-offset-reset: latest
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # CHANGED: Use StringDeserializer to prevent ClassNotFound exceptions
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
