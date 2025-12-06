@@ -1,0 +1,166 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: postgres
+    spec:
+      ports:
+        - port: 5432
+      selector:
+        app: postgres
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: postgres
+    spec:
+      selector:
+        matchLabels:
+          app: postgres
+      template:
+        metadata:
+          labels:
+            app: postgres
+        spec:
+          containers:
+            - name: postgres
+              image: postgres:16-alpine
+              env:
+                - name: POSTGRES_USER
+                  value: "admin"
+                - name: POSTGRES_PASSWORD
+                  value: "password"
+                - name: POSTGRES_DB
+                  value: "finguard_db"
+
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: kafka
+    spec:
+      ports:
+        - port: 9092
+      selector:
+        app: kafka
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: kafka
+    spec:
+      selector:
+        matchLabels:
+          app: kafka
+      template:
+        metadata:
+          labels:
+            app: kafka
+        spec:
+          containers:
+            - name: kafka
+              image: bitnami/kafka:latest
+              env:
+                - name: KAFKA_CFG_NODE_ID
+                  value: "0"
+                - name: KAFKA_CFG_PROCESS_ROLES
+                  value: "controller,broker"
+                - name: KAFKA_CFG_LISTENERS
+                  value: "PLAINTEXT://:9092,CONTROLLER://:9093"
+                - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+                  value: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+                - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+                  value: "0@kafka:9093"
+                - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+                  value: "CONTROLLER"
+
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: fraud-service
+    spec:
+      ports:
+        - port: 9090
+          targetPort: 9090
+      selector:
+        app: fraud-sentinel
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: fraud-sentinel
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: fraud-sentinel
+      template:
+        metadata:
+          labels:
+            app: fraud-sentinel
+        spec:
+          containers:
+            - name: fraud-sentinel
+              image: finguard/fraud-sentinel:latest
+              imagePullPolicy: IfNotPresent
+              ports:
+                - containerPort: 9090
+
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: analytics-service
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: analytics-service
+      template:
+        metadata:
+          labels:
+            app: analytics-service
+        spec:
+          containers:
+            - name: analytics-service
+              image: finguard/analytics-service:latest
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+                  value: "kafka:9092"
+
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: transaction-engine
+    spec:
+      type: LoadBalancer
+      ports:
+        - port: 80
+          targetPort: 8081
+      selector:
+        app: transaction-engine
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: transaction-engine
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: transaction-engine
+      template:
+        metadata:
+          labels:
+            app: transaction-engine
+        spec:
+          containers:
+            - name: transaction-engine
+              image: finguard/transaction-engine:latest
+              imagePullPolicy: IfNotPresent
+              ports:
+                - containerPort: 8081
+              env:
+                - name: SPRING_DATASOURCE_URL
+                  value: "jdbc:postgresql://postgres:5432/finguard_db"
+                - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+                  value: "kafka:9092"
+                - name: GRPC_CLIENT_FRAUD_SERVICE_ADDRESS
+                  value: "static://fraud-service:9090"
