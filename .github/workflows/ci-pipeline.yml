@@ -49,17 +49,39 @@ jobs:
         working-directory: frontend/banking-dashboard
         run: npm run build -- --configuration=production
 
-  docker-build:
+  docker-publish:
     runs-on: ubuntu-latest
-    needs: [backend-build]
+    needs: [ backend-build, frontend-build ]
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Transaction Engine Image
-        run: docker build -t finguard/transaction-engine:latest backend/transaction-engine
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Fraud Sentinel Image
-        run: docker build -t finguard/fraud-sentinel:latest backend/fraud-sentinel
+      - name: Build and Push Transaction Engine
+        uses: docker/build-push-action@v5
+        with:
+          context: backend/transaction-engine
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/transaction-engine:latest
+
+      - name: Build and Push Fraud Sentinel
+        uses: docker/build-push-action@v5
+        with:
+          context: backend/fraud-sentinel
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/fraud-sentinel:latest
+
+      - name: Build and Push Analytics Service
+        uses: docker/build-push-action@v5
+        with:
+          context: backend/analytics-service
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/analytics-service:latest
